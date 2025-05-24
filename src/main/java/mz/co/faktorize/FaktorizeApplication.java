@@ -1,4 +1,4 @@
-package mz.co.faktorize.faktorize;
+package mz.co.faktorize;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
