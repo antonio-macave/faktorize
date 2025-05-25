@@ -1,0 +1,29 @@
+package mz.co.faktorize.models;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+
+@Table(name = "tb_items")
+@Entity
+public class Item {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    private Long id;
+    private int quantity;
+    private String name;
+    private double amount; // Gross amount
+
+    @ManyToOne
+    private Invoice invoice;
+}
