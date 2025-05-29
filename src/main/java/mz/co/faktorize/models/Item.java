@@ -22,8 +22,8 @@ public class Item {
 
     private Long id;
     private int quantity;
-    private String name;
-    private double amount; // Gross amount
+    private String description;
+    private double grossAmount; // Gross amount
 
     @ManyToOne
     @JoinColumn(name = "invoice_id")
