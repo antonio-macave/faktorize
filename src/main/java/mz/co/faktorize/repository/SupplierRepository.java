@@ -9,4 +9,5 @@ import mz.co.faktorize.models.Supplier;
 public interface SupplierRepository extends JpaRepository<Supplier, Long>{
     Optional<Supplier> findSupplierById(Long id);
     Optional<Supplier> findSupplierByName(String name);
+    void deleteSupplierById(Long id);
 }
