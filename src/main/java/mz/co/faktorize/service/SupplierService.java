@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import mz.co.faktorize.dtos.SupplierDto;
 import mz.co.faktorize.models.Supplier;
 import mz.co.faktorize.repository.SupplierRepository;
 
@@ -20,9 +21,17 @@ public class SupplierService {
         return supplierRepository.save(supplier);
     }
 
-    public Supplier findSupplierById(Long id) {
-        return supplierRepository.findById(id)
+    public SupplierDto findSupplierById(Long id) {
+        Supplier supplier = supplierRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found."));
+        return SupplierDto.convertToDto(supplier);
+    }
+
+    public void deleteSupplierById(Long id) {
+        if (!supplierRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found.");
+        }
+        supplierRepository.deleteById(id);
     }
 
 }
