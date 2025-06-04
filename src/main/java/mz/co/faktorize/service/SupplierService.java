@@ -17,8 +17,13 @@ public class SupplierService {
         this.supplierRepository = supplierRepository;
     }
 
-    public Supplier saveSupplier(Supplier supplier) {
-        return supplierRepository.save(supplier);
+    public SupplierDto saveSupplier(SupplierDto supplierDto) {
+        if (supplierDto.getName() == null || supplierDto.getName().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Supplier name cannot be empty.");
+        }
+        Supplier supplier = SupplierDto.convertToEntity(supplierDto);
+        supplierRepository.save(supplier);
+        return SupplierDto.convertToDto(supplier);
     }
 
     public SupplierDto findSupplierById(Long id) {
