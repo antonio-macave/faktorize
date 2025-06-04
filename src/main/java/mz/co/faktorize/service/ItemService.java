@@ -48,6 +48,22 @@ public class ItemService {
         return ItemDto.convertToDto(savedItem);
     }
 
+    public ItemDto updaItemDto(Long id, ItemDto updatedItemDto) {
+        Item existingItem = itemRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found."));
+
+        Invoice invoice = invoiceRepository.findInvoiceById(updatedItemDto.getInvoiceId())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice not found."));
+
+        existingItem.setDescription(updatedItemDto.getDescription());
+        existingItem.setGrossAmount(updatedItemDto.getGrossAmount());
+        existingItem.setQuantity(updatedItemDto.getQuantity());
+        existingItem.setInvoice(invoice);
+
+        Item updatedItem = itemRepository.save(existingItem);
+        return ItemDto.convertToDto(updatedItem);
+    }
+
     public void deleteItemById(Long id) {
         if (!itemRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found.");
