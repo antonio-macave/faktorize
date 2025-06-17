@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import mz.co.faktorize.dtos.InvoiceDto;
 import mz.co.faktorize.dtos.SupplierDto;
 import mz.co.faktorize.models.Supplier;
 import mz.co.faktorize.repository.SupplierRepository;
@@ -37,6 +38,31 @@ public class SupplierService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found.");
         }
         supplierRepository.deleteById(id);
+    }
+
+    public void updateSupplierDto(Long supplierId, SupplierDto updatedSupplierDto) {
+        Supplier existingSupplier = supplierRepository.findById(supplierId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found."));
+
+        if (updatedSupplierDto.getName() == null || updatedSupplierDto.getName().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Supplier name cannot be empty.");
+        }
+
+        existingSupplier.setName(updatedSupplierDto.getName());
+        existingSupplier.setAddress(updatedSupplierDto.getAdress());
+        existingSupplier.setCity(updatedSupplierDto.getCity());
+        existingSupplier.setCountry(updatedSupplierDto.getCountry());
+        existingSupplier.setVatNumber(updatedSupplierDto.getVatNumber());
+
+        if (updatedSupplierDto.getInvoices() != null) {
+            existingSupplier.setInvoices(
+                updatedSupplierDto.getInvoices().stream()
+                    .map(InvoiceDto::convertToEntity)
+                    .toList()
+            );
+        }
+
+        supplierRepository.save(existingSupplier);
     }
 
 }
