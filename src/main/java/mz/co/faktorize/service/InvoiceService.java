@@ -1,7 +1,6 @@
 package mz.co.faktorize.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -46,4 +45,10 @@ public class InvoiceService {
         }
     }
 
+    public void deleteInvoiceById(Long id) {
+        if (!invoiceRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice not found.");
+        }
+        invoiceRepository.deleteById(id);
+    }
 }
