@@ -48,7 +48,7 @@ public class ItemService {
         return ItemDto.convertToDto(savedItem);
     }
 
-    public ItemDto updaItemDto(Long id, ItemDto updatedItemDto) {
+    public ItemDto updateItemDto(Long id, ItemDto updatedItemDto) {
         Item existingItem = itemRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found."));
 
