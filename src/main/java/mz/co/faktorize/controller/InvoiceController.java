@@ -1,5 +1,7 @@
 package mz.co.faktorize.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,11 @@ public class InvoiceController {
     @GetMapping("/invoices/{id}")
     public ResponseEntity<Invoice> getInvoices(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(invoiceService.findInvoiceById(id));
+    }
+
+    @GetMapping("/invoices")
+    public ResponseEntity<List<InvoiceDto>> getAllInvoices() {
+        return ResponseEntity.status(HttpStatus.OK).body(invoiceService.findAllInvoices());
     }
 
     @PostMapping("/invoices")

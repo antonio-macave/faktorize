@@ -34,6 +34,13 @@ public class InvoiceService {
         return invoiceRepository.save(invoice);
     }
 
+    public List<InvoiceDto> findAllInvoices() {
+        return invoiceRepository.findAll()
+            .stream()
+            .map(InvoiceDto::convertToDto)
+            .collect(Collectors.toList());
+    }
+
     public Invoice findInvoiceById(Long id) {
         return invoiceRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invoice not found."));
