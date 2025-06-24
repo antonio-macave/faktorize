@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import mz.co.faktorize.dtos.InvoiceDto;
 import mz.co.faktorize.models.Invoice;
 import mz.co.faktorize.models.Supplier;
 import mz.co.faktorize.repository.InvoiceRepository;
@@ -23,7 +24,13 @@ public class InvoiceService {
         this.supplierRepository = supplierRepository;
     }
 
-    public Invoice saveInvoice(Invoice invoice) {
+    public Invoice saveInvoice(InvoiceDto invoiceDto) {
+        if (invoiceDto.getSupplierId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Supplier ID cannot be null.");
+        }
+        Invoice invoice = InvoiceDto.convertToEntity(invoiceDto);
+        Supplier supplier = supplierRepository.findById(invoiceDto.getSupplierId())
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found."));
         return invoiceRepository.save(invoice);
     }
 
