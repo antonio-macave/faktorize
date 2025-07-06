@@ -1,5 +1,7 @@
 package mz.co.faktorize.dtos;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ public class SupplierDto {
     private String adress;
     private String city;
     private String country;
+    private List<InvoiceDto> invoices;
 
 
     public static SupplierDto convertToDto(Supplier supplier) {
