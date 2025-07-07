@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-import mz.co.faktorize.dtos.ItemDto;
 import mz.co.faktorize.models.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
