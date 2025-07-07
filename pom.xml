@@ -11,8 +11,8 @@
 	<groupId>mz.co.faktorize</groupId>
 	<artifactId>faktorize</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>faktorize</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Faktorize Invoice Management System</name>
+	<description>RESTful API for invoice, supplier and customer management built with Spring Boot and MySQL.</description>
 	<url/>
 	<licenses>
 		<license/>
