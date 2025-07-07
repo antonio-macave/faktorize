@@ -1,5 +1,7 @@
 package mz.co.faktorize.service;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,6 +27,12 @@ public class SupplierService {
         Supplier supplier = SupplierDto.convertToEntity(supplierDto);
         supplierRepository.save(supplier);
         return SupplierDto.convertToDto(supplier);
+    }
+
+    public List<SupplierDto> findAllSuppliers() {
+        return supplierRepository.findAll().stream()
+            .map(SupplierDto::convertToDto)
+            .toList();
     }
 
     public SupplierDto findSupplierById(Long id) {
