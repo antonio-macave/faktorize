@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.websocket.server.PathParam;
 import mz.co.faktorize.dtos.SupplierDto;
 import mz.co.faktorize.service.SupplierService;
 
@@ -37,7 +36,7 @@ public class SupplierController {
     }
 
     @GetMapping("/suppliers/{id}")
-    public ResponseEntity<SupplierDto> getSupplierById(@PathParam("id") Long id) {
+    public ResponseEntity<SupplierDto> getSupplierById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(supplierService.findSupplierById(id));
     }
 
@@ -47,7 +46,7 @@ public class SupplierController {
     }
 
     @DeleteMapping("/suppliers/{id}")
-    public ResponseEntity<Void> deleteSupplierById(@PathParam("id") Long id) {
+    public ResponseEntity<Void> deleteSupplierById(@PathVariable("id") Long id) {
         supplierService.deleteSupplierById(id);
         return ResponseEntity.noContent().build();
     }
