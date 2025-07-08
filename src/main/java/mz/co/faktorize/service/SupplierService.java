@@ -48,7 +48,7 @@ public class SupplierService {
         supplierRepository.deleteById(id);
     }
 
-    public void updateSupplierDto(Long supplierId, SupplierDto updatedSupplierDto) {
+    public SupplierDto updateSupplier(Long supplierId, SupplierDto updatedSupplierDto) {
         Supplier existingSupplier = supplierRepository.findById(supplierId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found."));
 
@@ -70,7 +70,8 @@ public class SupplierService {
             );
         }
 
-        supplierRepository.save(existingSupplier);
+        updatedSupplierDto = SupplierDto.convertToDto(supplierRepository.save(existingSupplier));
+        return updatedSupplierDto;
     }
 
 }
