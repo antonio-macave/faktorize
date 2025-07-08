@@ -1,5 +1,7 @@
 package mz.co.faktorize.service;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,6 +29,12 @@ public class SupplierService {
         return SupplierDto.convertToDto(supplier);
     }
 
+    public List<SupplierDto> findAllSuppliers() {
+        return supplierRepository.findAll().stream()
+            .map(SupplierDto::convertToDto)
+            .toList();
+    }
+
     public SupplierDto findSupplierById(Long id) {
         Supplier supplier = supplierRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found."));
@@ -40,7 +48,7 @@ public class SupplierService {
         supplierRepository.deleteById(id);
     }
 
-    public void updateSupplierDto(Long supplierId, SupplierDto updatedSupplierDto) {
+    public SupplierDto updateSupplier(Long supplierId, SupplierDto updatedSupplierDto) {
         Supplier existingSupplier = supplierRepository.findById(supplierId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found."));
 
@@ -62,7 +70,8 @@ public class SupplierService {
             );
         }
 
-        supplierRepository.save(existingSupplier);
+        updatedSupplierDto = SupplierDto.convertToDto(supplierRepository.save(existingSupplier));
+        return updatedSupplierDto;
     }
 
 }
