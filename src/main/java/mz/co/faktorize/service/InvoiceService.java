@@ -29,7 +29,7 @@ public class InvoiceService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Supplier ID cannot be null.");
         }
         Invoice invoice = InvoiceDto.convertToEntity(invoiceDto);
-        Supplier supplier = supplierRepository.findById(invoiceDto.getSupplierId())
+        supplierRepository.findById(invoiceDto.getSupplierId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Supplier not found."));
         return invoiceRepository.save(invoice);
     }
